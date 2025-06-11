@@ -1,2 +1,5 @@
-# Ignore compiled binaries
-hello
+# Build artifacts
+build
+
+# Compiled binaries
+ml_toolkit

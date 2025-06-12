@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 
 template <typename T = double>
@@ -12,7 +14,7 @@ class MatrixView {
     const std::size_t num_rows() const { return num_rows_; }
     const std::size_t num_cols() const { return num_cols_; }
     const std::size_t stride() const { return stride_; }
-    const T *data() const { return data; }
+    const T *data() const { return data_; }
 
   private:
     T *data_;

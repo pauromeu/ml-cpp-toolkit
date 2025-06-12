@@ -1,10 +1,14 @@
+#include "core/Dataset.hpp"
 #include "model/IModel.hpp"
+#include "model/LinearRegression.hpp"
+#include <Eigen/Core>
 #include <iostream>
 
 int main() {
-    std::cout << "Interface compiles!" << std::endl;
+    using T = double;
 
-    IModel<> *model = nullptr;
+    std::vector<std::vector<T>> nested = {{1, 2}, {3, 4}, {5, 6}};
 
-    return 0;
+    Dataset<T> X(nested.size(), nested[0].size());
+    X.fill([&](std::size_t i, std::size_t j) { return nested[i][j]; });
 }

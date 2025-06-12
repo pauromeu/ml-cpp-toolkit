@@ -3,10 +3,8 @@
 template <typename T = double>
 class MatrixView {
   public:
-    MatrixView(T * ptr, std::size_t num_rows, std::size_t num_cols, std::size_t stride = 0)
-        : data_(ptr),
-          num_rows_(num_rows),
-          num_cols_(num_cols),
+    MatrixView(T *ptr, std::size_t num_rows, std::size_t num_cols, std::size_t stride = 0)
+        : data_(ptr), num_rows_(num_rows), num_cols_(num_cols),
           stride_(stride ? stride : num_cols) {}
 
     const T &operator()(std::size_t i, std::size_t j) const { return data_[i * stride_ + j]; }

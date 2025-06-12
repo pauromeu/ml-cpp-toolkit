@@ -1,3 +1,5 @@
+#pragma once
+
 #include "core/MatrixView.hpp"
 #include <iostream>
 

@@ -1,5 +1,8 @@
 CXX = clang++
-CXXFLAGS = -std=c++17 -Wall -Iinclude
+CXXFLAGS = -std=c++17 -Wall -Iinclude -MMD -MP
+
+EIGEN_DIR = external/eigen
+CXXFLAGS += -I$(EIGEN_DIR)
 
 SRC_FILES = $(shell find src -name '*.cpp')
 OBJ_FILES = $(patsubst src/%.cpp, build/%.o, $(SRC_FILES))

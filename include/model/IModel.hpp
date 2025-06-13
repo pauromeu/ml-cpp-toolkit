@@ -10,15 +10,7 @@ class IModel {
 
     virtual T predict(const std::vector<T> &x) const = 0;
 
-    virtual std::vector<T> predictBatch(const std::vector<std::vector<T>> &X) const {
-        std::vector<T> out;
-        out.reserve(X.num_rows());
-        for (std::size_t i = 0; i < X.num_rows(); i++) {
-            const T *row = X.data() + i * X.stride();
-            out.emplace_back(predict({row, row + X.num_cols()}));
-        }
-        return out;
-    }
+    virtual std::vector<T> predictBatch(const MatrixView<T> &X) const = 0;
 
     virtual ~IModel() = default;
 };

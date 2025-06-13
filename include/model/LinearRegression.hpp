@@ -2,6 +2,7 @@
 
 #include "IModel.hpp"
 #include <Eigen/Core>
+#include <Eigen/QR>
 #include <vector>
 
 template <typename T = double>
@@ -26,7 +27,7 @@ class LinearRegression : public IModel<T> {
         assert(y.size() == n && "X and y must have the same size");
 
         // Map X and y to Eigen structures (no copy)
-        RowMap X_map(X.data(), n, d, {X.stride(), 1});
+        RowMap X_map(X.data(), n, d, Stride(X.stride(), 1));
         VecMap y_map(y.data(), n);
 
         // Build [1 | X]
@@ -35,7 +36,7 @@ class LinearRegression : public IModel<T> {
         X_aug.block(0, 1, n, d) = X_map;
 
         // Solve OLS via QR
-        ColVec w_aug = X_aug.colPivHouseholderQR().solve(y_map);
+        ColVec w_aug = X_aug.colPivHouseholderQr().solve(y_map);
 
         // Store coefficients
         intercept_ = w_aug(0);
@@ -48,12 +49,12 @@ class LinearRegression : public IModel<T> {
         return coef_.dot(x_map) + intercept_;
     }
 
-    std::vector<T> predictBatch(const std::vector<std::vector<T>> &X) const override {
+    std::vector<T> predictBatch(const MatrixView<T> &X) const override {
         std::size_t n = X.num_rows();
         std::size_t d = X.num_cols();
         assert(d == static_cast<std::size_t>(coef_.size()) && "dim mismatch");
 
-        RowMap X_map(X.data(), n, d, {X.stride(), 1});
+        RowMap X_map(X.data(), n, d, Stride(X.stride(), 1));
         ColVec y = X_map * coef_;
         y.array() += intercept_;
 

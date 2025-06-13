@@ -1,5 +1,5 @@
-#include <iostream>
 #include "core/MatrixView.hpp"
+#include <iostream>
 
 template <typename T = double>
 class Dataset {
@@ -16,9 +16,11 @@ class Dataset {
         }
     }
 
-    MatrixView<T> view() const {
-        return {data_.data(), num_rows_, num_cols_};
-    }
+    MatrixView<T> view() { return {data_.data(), num_rows_, num_cols_}; }
+    MatrixView<const T> view() const { return {data_.data(), num_rows_, num_cols_}; }
+
+    T *data() { return data_.data(); }
+    const T *data() const { return data_.data(); }
 
   private:
     std::vector<T> data_;

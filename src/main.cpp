@@ -54,7 +54,8 @@ int main() {
     /* 3. vectorised predictBatch() -------------------------------------- */
     std::cout << std::endl << "vectorised predictBatch()" << std::endl;
     auto y_vec = lr.predictBatch(ds.view());
-    for (double v : y_vec) std::cout << v << std::endl;
+    for (double v : y_vec)
+        std::cout << v << std::endl;
 
     return 0;
 }
